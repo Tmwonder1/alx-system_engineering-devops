@@ -1,2 +1,2 @@
 #!/bin/bash
-ls -mvd [0-9a-zA-Z]*/ .[^.]*/
+ls -avmp
