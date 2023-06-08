@@ -1,2 +1,3 @@
 #!/bin/bash
-sudo chown -v --from=guillaume betty hello
+chown --from=guillaume betty hello
+
