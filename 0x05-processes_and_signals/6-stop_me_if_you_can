@@ -1,9 +1,3 @@
 #!/usr/bin/env bash
-
-# This script stops the execution of the script printing "To infinity and beyond" by creating a flag file.
-
-flag_file="/tmp/stop_infinity_script.flag"
-
-# Create the flag file to signal the running script to stop
-touch "$flag_file"
-echo "Created stop flag: $flag_file"
+# This script kills 4-to_infinity_and_beyond without kill or killall
+pkill -f beyond
