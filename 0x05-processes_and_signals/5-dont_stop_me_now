@@ -1,5 +1,4 @@
 #!/usr/bin/env bash
-
 # This script stops the execution of another script that continuously prints "To infinity and beyond".
 
 # Find the process running the continuous echo loop by matching the command line
