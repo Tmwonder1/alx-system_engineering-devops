@@ -1,0 +1,23 @@
+#!/usr/bin/env bash
+
+# This script stops the execution of another script that continuously prints "To infinity and beyond".
+
+# Find the process running the continuous echo loop by matching the command line
+# Note: Adjust the pgrep pattern to exactly match the specific script or command that runs your loop if it's not unique.
+pids=$(pgrep -f 'echo "To infinity and beyond"')
+
+# Kill the process using the list of process IDs found
+for pid in $pids; do
+    kill "$pid"
+    echo "Killed process $pid"
+done
+
+# Check if there are no remaining processes; otherwise, attempt to kill with -9
+if [ -n "$pids" ]; then
+    sleep 2
+    pids=$(pgrep -f 'echo "To infinity and beyond"')
+    for pid in $pids; do
+        kill -9 "$pid"
+        echo "Force-killed process $pid"
+    done
+fi
