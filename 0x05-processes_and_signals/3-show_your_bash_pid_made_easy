@@ -1,9 +1,13 @@
 #!/usr/bin/env bash
-# Displays "To infinity and beyond" indefinitely,
-# with a "sleep 2" in between each iteration.
+# Navigate to the /proc directory where process info is stored
+cd /proc || exit 1
 
-while true
-do
-  echo "To infinity and beyond"
-  sleep 2
+# Iterate over each directory named with a numeric PID
+for pid in [0-9]*; do
+    # Check if the command name contains 'bash' and the directory exists
+    if [ -d "$pid" ] && [ -r "$pid/comm" ] && grep -q "bash" "$pid/comm" 2>/dev/null; then
+        # Extract and print the command name and PID
+        cmd=$(<"$pid/comm")
+        echo "$pid $cmd"
+    fi
 done
