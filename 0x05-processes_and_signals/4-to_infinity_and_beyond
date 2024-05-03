@@ -1,5 +1,4 @@
 #!/usr/bin/env bash
-
 # This script prints "To infinity and beyond" indefinitely with a 2-second pause between each iteration.
 
 while true; do
