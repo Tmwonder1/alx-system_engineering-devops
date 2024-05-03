@@ -1,0 +1,24 @@
+#!/usr/bin/env bash
+# This script initializes by writing its PID to /var/run/myscript.pid
+# Continuously prints "Flying through space!" until interrupted
+# Outputs "Dislike termination signals!" upon receiving a SIGTERM
+# Outputs "Why don't you like me?!" upon receiving a SIGINT
+# Cleans up by deleting /var/run/myscript.pid and exits when receiving SIGINT, SIGTERM, or SIGQUIT
+
+function cleanup() {
+    rm -f /var/run/myscript.pid
+    exit 0
+}
+
+# Setting traps for interrupt and termination signals
+trap 'echo "Dislike termination signals!"; cleanup' SIGTERM
+trap 'echo "Why don't you like me?!"; cleanup' SIGINT
+
+# Write the script's PID to a file
+echo $$ > /var/run/myscript.pid
+
+# Main loop
+while true; do
+    echo "Flying through space!"
+    sleep 1  # Added a sleep to reduce CPU usage, remove if continuous output is needed
+done
