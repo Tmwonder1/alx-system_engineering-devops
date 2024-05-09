@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+# This script displays all listening sockets along with the PID and program name of the associated process.
+
+# Check for root privileges
+if [ "$(id -u)" -ne 0 ]; then
+    echo "This script must be run as root" >&2
+    exit 1
+fi
+
+echo "Active Internet connections (only servers)"
+ss -lntp  # List TCP sockets in listening state, show numeric addresses and program names
+ss -lnup  # List UDP sockets in listening state, show numeric addresses and program names
+
+echo "Active UNIX domain sockets (only servers)"
+ss -lnx  # List UNIX domain sockets in listening state
