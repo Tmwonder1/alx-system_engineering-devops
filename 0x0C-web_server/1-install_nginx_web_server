@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+# This script installs and configures Nginx on Ubuntu to serve a 'Hello World!' page
+
+# Update system repositories
+apt-get update
+
+# Install Nginx
+apt-get install -y nginx
+
+# Create and write the HTML file served by Nginx
+echo "Hello World!" > /var/www/html/index.html
+
+# Ensure Nginx is set to listen on port 80
+sed -i '/listen 80 default_server;/c\    listen 80 default_server;' /etc/nginx/sites-available/default
+sed -i '/listen \[::\]:80 default_server;/c\    listen [::]:80 default_server;' /etc/nginx/sites-available/default
+sed -i '/root \/var\/www\/html;/c\    root /var/www/html;' /etc/nginx/sites-available/default
+
+# Reload Nginx without systemctl
+service nginx restart
