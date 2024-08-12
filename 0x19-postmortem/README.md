@@ -1,56 +1,41 @@
-# Postmortem: Service Outage on August 10th, 2024
+Postmortem: The Great Memory Leak of August 10th, 2024
+Issue Summary
+Duration:
+Outage lasted for 2 hours and 45 minutes, from 10:30 AM to 1:15 PM EST.
+(Or as we like to call it, the "Longest Coffee Break Ever").
 
-## Issue Summary
+Impact:
+70% of our users were left hanging, staring at a spinning wheel of doom as our main website turned into a digital sloth. For 40% of those unfortunate souls, the website didn’t load at all, leaving them wondering if the internet had finally given up on them.
 
-**Duration:**  
-Outage lasted for 2 hours and 45 minutes from 10:30 AM to 1:15 PM EST on August 10th, 2024.
+Root Cause:
+Turns out, our API service was hogging memory like a teenager at an all-you-can-eat buffet. A sneaky memory leak in the latest deployment caused our primary web server to wave the white flag and crash.
 
-**Impact:**  
-The outage affected 70% of our users globally. During this period, users experienced slow response times when accessing our main website, with page loads taking upwards of 30 seconds or timing out completely. Approximately 40% of users were unable to load the website at all.
+Timeline (Or, How We Went from "It's Fine" to "Oh No!")
+10:30 AM: Alert! Monitoring system tells us something is very wrong—like “the sky is falling” wrong.
+10:35 AM: DevOps engineer chokes on coffee, confirms the alert. Memory usage is through the roof.
+10:40 AM: "It’s probably the load balancer," we thought. We were wrong. Very wrong.
+11:00 AM: Load balancer clears its name. Suspicion shifts to the API service.
+11:15 AM: We bring in the API dev team, who are as thrilled as cats in water.
+11:25 AM: API logs show a memory-hungry monster in our new feature. Mystery solved!
+11:45 AM: We roll back the API service, like hitting Ctrl+Z on a bad decision.
+12:00 PM: Server reboot—because when in doubt, restart it!
+1:15 PM: Crisis averted, website returns to normal. DevOps engineer finally exhales.
+Root Cause and Resolution
+Root Cause:
+In a nutshell, our shiny new API feature was like a bad roommate, leaving memory lying around everywhere. A missing database connection cleanup led to a memory leak that eventually exhausted the server’s memory, causing it to crash harder than a teenager after an energy drink binge.
 
-**Root Cause:**  
-The root cause was an unexpected server crash caused by a memory leak in the newly deployed version of the API service, which exhausted the available memory on the primary web server.
+Resolution:
+We hit the rewind button and rolled back the API service to a previous, more civilized version. After a quick server reboot to clear out the clutter, everything was back to normal. The new feature is now on a timeout until it learns to clean up after itself.
 
----
+Corrective and Preventative Measures
+Improvements:
 
-### Timeline
+Code Review: We're beefing up our code reviews to spot memory leaks before they become memory tsunamis.
+Monitoring: New memory leak detectors are on the way—because nobody likes surprises.
+Deployment: From now on, we’re rolling out new features like they’re driving tests—slow and steady.
+Tasks:
 
-- **10:30 AM:** Issue detected via automated monitoring alerts indicating a significant drop in server performance and increased error rates.
-- **10:35 AM:** DevOps engineer verified the alert and noticed a spike in memory usage on the primary web server.
-- **10:40 AM:** Initial investigation focused on the load balancer, assuming the issue was related to improper traffic distribution.
-- **11:00 AM:** The load balancer was ruled out as the cause, and attention shifted to the API service, suspecting a code deployment issue.
-- **11:15 AM:** The issue was escalated to the API development team.
-- **11:25 AM:** API logs were examined, revealing a pattern of increased memory consumption.
-- **11:45 AM:** A memory leak in the recently deployed API service was identified as the likely cause.
-- **12:00 PM:** The API service was rolled back to the previous stable version.
-- **12:15 PM:** The primary web server was restarted, and system performance began to stabilize.
-- **1:15 PM:** Full service was restored, and all monitoring metrics returned to normal levels.
-
----
-
-### Root Cause and Resolution
-
-**Root Cause:**  
-The issue was caused by a memory leak introduced in the latest version of the API service, which was deployed the night before. The memory leak occurred due to improper handling of database connections in a new feature that was added to the API. Over time, this caused the primary web server's memory to be exhausted, leading to a crash that impacted the availability of the service.
-
-**Resolution:**  
-Once the memory leak was identified, the decision was made to roll back the API service to the previous stable version. This rollback removed the faulty code responsible for the memory leak. Following the rollback, the primary web server was restarted to clear the exhausted memory. The system was closely monitored after the rollback, and all performance metrics returned to normal.
-
----
-
-### Corrective and Preventative Measures
-
-**Improvements:**
-
-- **Code Review Process:** The code review process will be enhanced to include more rigorous testing for memory management, particularly for changes involving database connections.
-- **Monitoring Enhancements:** Improved monitoring will be implemented to detect memory leaks and abnormal memory usage patterns earlier, allowing for quicker identification and resolution of similar issues in the future.
-- **Deployment Process:** A more cautious deployment strategy will be adopted, including phased rollouts and canary releases, to minimize the impact of future issues.
-
-**Tasks:**
-
-1. **Patch API Service:** Fix the memory leak issue in the new feature and ensure all related database connections are correctly managed.
-2. **Add Memory Usage Alerts:** Implement additional monitoring on server memory to alert the team before critical memory thresholds are reached.
-3. **Improve Rollback Procedures:** Develop and document a faster rollback procedure for critical services to reduce downtime in the event of a future deployment issue.
-4. **Review Deployment Strategy:** Adjust the deployment strategy to include gradual rollouts with more comprehensive monitoring of early-stage deployments.
-
-This postmortem highlights the importance of rigorous testing and monitoring, especially when deploying new features. The actions outlined will help to prevent similar incidents from occurring in the future and improve overall system resilience.
+Patch API Service: Teach the API feature some manners—no more leaving memory all over the place.
+Add Memory Alerts: Early warning systems for memory usage—because we'd rather not relive this nightmare.
+Streamline Rollbacks: Make rolling back as easy as pressing undo.
+Slow Down Deployment: No more pedal to the metal. We’re rolling out cautiously from now on.
