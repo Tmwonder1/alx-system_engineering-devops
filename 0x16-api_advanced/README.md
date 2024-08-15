@@ -1,33 +1,50 @@
-# API Advanced
+# API advanced
 
-This repository contains advanced topics related to APIs in the context of system engineering and DevOps.
+I continued to practice querying API's in this advanced project, this time
+working with the Reddit API.
 
-## Table of Contents
-- [Introduction](#introduction)
-- [Installation](#installation)
-- [Usage](#usage)
-- [Contributing](#contributing)
-- [License](#license)
+## Tests :heavy_check_mark:
 
-## Introduction
-In this project, we explore advanced concepts and techniques for working with APIs. We delve into topics such as authentication, rate limiting, pagination, and error handling. By understanding these advanced concepts, we can build more robust and efficient applications that interact with APIs.
+* [tests](./tests): Folder of test files for all tasks. Provided by Holberton
+School.
 
-## Installation
-To get started with this project, follow these steps:
+## Function Prototypes :floppy_disk:
 
-1. Clone the repository: `git clone https://github.com/Tmwonder1/0x16-api_advanced.git`
-2. Change into the project directory: `cd api-advanced`
-3. Install the required dependencies: `npm install`
 
-## Usage
-To use the code in this repository, follow these steps:
+Prototypes for functions written in this project:
 
-1. Open the desired file in your preferred code editor.
-2. Modify the code as needed to fit your specific use case.
-3. Run the code using the appropriate command or script.
+| File           | Prototype                               |
+| -------------- | --------------------------------------- |
+| `0-subs.py`    | `def number_of_subscribers(subreddit)`  |
+| `1-top_ten.py` | `def top_ten(subreddit)`                |
+| `2-recurse.py` | `def recurse(subreddit, hot_list=[])`   |
+| `100-count.py` | `def count_words(subreddit, word_list)` |
 
-## Contributing
-Contributions are welcome! If you have any suggestions or improvements, please submit a pull request. Make sure to follow the [contribution guidelines](CONTRIBUTING.md) when making changes.
+## Tasks :page_with_curl:
 
-## License
-This project is licensed under the [MIT License](LICENSE).
+
+* **0. How many subs?**
+  * [0-subs.py](./0-subs.py): Python function that returns the total number of
+  subscribers for a given subreddit.
+  * Returns `0` if an invalid subreddit is given.
+
+* **1. Top Ten**
+  * [1-top_ten.py](./1-top_ten.py): Python function that prints the top ten
+  hottest posts for a given subreddit.
+  * Prints `None` if an invalid subreddit is given.
+
+* **2. Recurse it!**
+  * [2-recurse.py](./2-recurse.py): Python function that recursively returns a
+  list of titles for all hot articles on a given subreddit.
+  * Returns `None` if no results are found on the given subreddit.
+
+* **3. Count it!**
+  * [100-count.py](./100-count.py): Python function that recursively prints a
+  sorted count of given keywords parsed from titles of all hot articles on a given
+  subreddit.
+  * Keywords are case-insensitive and delimited by spaces.
+  * Results are printed in descending order by count.
+  * Words with identical counts are sorted alphabetically.
+  * Words with no matches are skipped.
+  * Results are based on the number of times a keyword appears - ie.,
+  `java java java` counts as three separate instances of `java`.
