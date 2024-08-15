@@ -18,16 +18,14 @@ def number_of_subscribers(subreddit):
     """
 
     url = f"https://www.reddit.com/r/{subreddit}/about.json"
-    user_agent = {"User-Agent": "kubuntu:konsole:v23.08.1 (by /u/0x83N3)"}
+    user_agent = {"User-Agent": "python:myapp:v1.0 (by /u/your_username)"}
 
-    response = requests.get(url, headers=user_agent, timeout=10)
-
-    if response.status_code == 200:
-        try:
+    try:
+        response = requests.get(url, headers=user_agent, timeout=10)
+        if response.status_code == 200:
             data = response.json()
-            return data["data"]["subscribers"]
-        except KeyError:
+            return data.get("data", {}).get("subscribers", 0)
+        else:
             return 0
-
-    else:
+    except requests.exceptions.RequestException:
         return 0
